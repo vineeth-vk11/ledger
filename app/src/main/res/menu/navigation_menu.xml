@@ -12,7 +12,7 @@
 
         <item android:id="@+id/profile"
             android:icon="@drawable/ic_profile"
-            android:title="Edit Profile"/>
+            android:title="Profile"/>
 
         <item android:id="@+id/logout"
             android:icon="@drawable/ic_logout"

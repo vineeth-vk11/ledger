@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     String company;
     String sales;
 
+    String name, address, number;
+
     DrawerLayout drawerLayout;
 
     Uri uri;
@@ -75,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             userId = intent.getStringExtra("userId");
             company = intent.getStringExtra("company");
             sales = intent.getStringExtra("sales");
+            name = intent.getStringExtra("name");
+            address = intent.getStringExtra("address");
+            number = intent.getStringExtra("number");
         }
 
         final NavigationView navigationView = findViewById(R.id.navigationView);
@@ -120,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("userId", userId);
             bundle.putString("company",company);
             bundle.putString("sales",sales);
+            bundle.putString("name",name);
+            bundle.putString("address",address);
+            bundle.putString("number",number);
+
             transactionsFragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -188,6 +197,9 @@ public class MainActivity extends AppCompatActivity {
                             bundle.putString("company",company);
                             bundle.putString("sales",sales);
                             bundle.putString("type","dealer");
+                            bundle.putString("name",name);
+                            bundle.putString("address",address);
+                            bundle.putString("number",number);
                             transactionsFragment.setArguments(bundle);
 
                             FragmentManager fragmentManager = getSupportFragmentManager();

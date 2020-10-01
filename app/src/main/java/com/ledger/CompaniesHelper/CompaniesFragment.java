@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +48,11 @@ public class CompaniesFragment extends Fragment {
     ImageButton download;
     ImageButton share;
 
+    ImageView empty;
+    ProgressBar progressBar;
+
+    TextView fragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,10 +65,16 @@ public class CompaniesFragment extends Fragment {
         sort = getActivity().findViewById(R.id.sort);
         download = getActivity().findViewById(R.id.download);
         share = getActivity().findViewById(R.id.share);
+        fragment = getActivity().findViewById(R.id.name);
+
+        fragment.setText("Companies");
 
         sort.setVisibility(View.INVISIBLE);
         download.setVisibility(View.INVISIBLE);
         share.setVisibility(View.INVISIBLE);
+
+        empty = view.findViewById(R.id.empty);
+        progressBar = view.findViewById(R.id.progressBar2);
 
         companies = view.findViewById(R.id.companiesRecycler);
         db = FirebaseFirestore.getInstance();
@@ -93,6 +107,7 @@ public class CompaniesFragment extends Fragment {
     }
 
     private void getCompanies(){
+        progressBar.setVisibility(View.VISIBLE);
         db.collection("Heads").document(userId).collection("companies").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -118,6 +133,10 @@ public class CompaniesFragment extends Fragment {
 
                 companiesAdapter = new CompaniesAdapter(getContext(), companiesModelsArrayList);
                 companies.setAdapter(companiesAdapter);
+                progressBar.setVisibility(View.INVISIBLE);
+                if(companiesModelsArrayList.size()==0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

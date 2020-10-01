@@ -118,11 +118,18 @@ public class LoginActivity extends AppCompatActivity {
                             } else if (type.equals("dealer")) {
                                 String company = documentSnapshot.getString("company");
                                 String sales = documentSnapshot.getString("sales");
+                                String name = documentSnapshot.getString("name");
+                                String address = documentSnapshot.getString("address");
+                                String number = documentSnapshot.getString("phoneNumber");
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userId", userId);
                                 intent.putExtra("company", company);
                                 intent.putExtra("sales",sales);
                                 intent.putExtra("type","dealer");
+                                intent.putExtra("name",name);
+                                intent.putExtra("address",address);
+                                intent.putExtra("number",number);
 
                                 editor.putBoolean("Authenticated",true);
                                 editor.putString("type",type);

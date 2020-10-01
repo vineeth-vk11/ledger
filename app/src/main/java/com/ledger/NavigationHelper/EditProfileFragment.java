@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -28,6 +30,10 @@ public class EditProfileFragment extends Fragment {
 
     String userId;
 
+    TextView fragment;
+
+    TextView name, email, phone, address;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,8 +43,17 @@ public class EditProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         userId = bundle.getString("id");
 
+        fragment = getActivity().findViewById(R.id.name);
+
+        fragment.setText("Profile");
+
         edit = view.findViewById(R.id.editImage);
         imageView = view.findViewById(R.id.profile_image);
+
+        name = view.findViewById(R.id.name);
+        email = view.findViewById(R.id.email);
+        phone = view.findViewById(R.id.phone);
+        address = view.findViewById(R.id.address);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +62,7 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        FirebaseFirestore db;
+        final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
 
         db.collection("Users").document(userId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -58,6 +73,14 @@ public class EditProfileFragment extends Fragment {
                     String image = documentSnapshot.getString("pic");
                     Picasso.get().load(image).into(imageView);
                 }
+
+                Log.i("name",documentSnapshot.getString("name"));
+
+                name.setText(documentSnapshot.getString("name"));
+                email.setText(documentSnapshot.getString("email"));
+                phone.setText(documentSnapshot.getString("phone"));
+                address.setText(documentSnapshot.getString("address"));
+
             }
         });
 

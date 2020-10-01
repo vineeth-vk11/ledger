@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +44,11 @@ public class SalesFragment extends Fragment {
     ImageButton download;
     ImageButton share;
 
+    ImageView empty;
+    ProgressBar progressBar;
+
+    TextView fragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +65,12 @@ public class SalesFragment extends Fragment {
         sort.setVisibility(View.INVISIBLE);
         download.setVisibility(View.INVISIBLE);
         share.setVisibility(View.INVISIBLE);
+        fragment = getActivity().findViewById(R.id.name);
+
+        fragment.setText("Sales");
+
+        empty = view.findViewById(R.id.empty);
+        progressBar = view.findViewById(R.id.progressBar3);
 
         sales = view.findViewById(R.id.salesRecycler);
         db = FirebaseFirestore.getInstance();
@@ -90,6 +104,7 @@ public class SalesFragment extends Fragment {
     }
 
     private void getSales(){
+        progressBar.setVisibility(View.VISIBLE);
         db.collection("Companies").document(company).collection("sales").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -110,6 +125,10 @@ public class SalesFragment extends Fragment {
 
                 salesAdapter = new SalesAdapter(getContext(), salesModelArrayList, company);
                 sales.setAdapter(salesAdapter);
+                progressBar.setVisibility(View.INVISIBLE);
+                if(salesModelArrayList.size() == 0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

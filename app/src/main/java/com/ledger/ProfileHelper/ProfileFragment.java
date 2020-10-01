@@ -36,6 +36,8 @@ public class ProfileFragment extends Fragment {
 
     TextView textView;
 
+    TextView fragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
@@ -43,6 +45,10 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
         Bundle bundle = getArguments();
+
+        fragment = getActivity().findViewById(R.id.name);
+
+        fragment.setText("Profile");
 
         name = bundle.getString("name");
         email = bundle.getString("email");

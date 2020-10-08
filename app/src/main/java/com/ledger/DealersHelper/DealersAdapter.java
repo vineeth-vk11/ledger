@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.ledger.ProfileHelper.ProfileFragment;
 import com.ledger.R;
 import com.ledger.TransactionsHelper.TransactionsFragment;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +62,9 @@ public class DealersAdapter extends RecyclerView.Adapter<DealersViewHolder> impl
     @Override
     public void onBindViewHolder(@NonNull final DealersViewHolder holder, final int position) {
         holder.name.setText(dealersModelArrayList.get(position).getName());
+
         holder.image.setImageResource(R.drawable.ic_dealer);
+
 
         holder.info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,13 @@ public class DealersAdapter extends RecyclerView.Adapter<DealersViewHolder> impl
                 bundle.putString("company",dealersModelArrayList.get(position).getCompany());
                 bundle.putString("sales",dealersModelArrayList.get(position).getSalesId());
                 bundle.putString("from","dealer");
+
+                if(dealersModelArrayList.get(position).getImage() != null){
+                    bundle.putString("pic",dealersModelArrayList.get(position).getImage());
+                }
+                else{
+                    bundle.putString("pic","none");
+                }
 
                 profileFragment.setArguments(bundle);
 

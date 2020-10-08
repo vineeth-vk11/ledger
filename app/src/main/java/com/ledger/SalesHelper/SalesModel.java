@@ -8,6 +8,7 @@ public class SalesModel {
     String email;
     String phone;
     String address;
+    String image;
 
     public SalesModel() {
     }
@@ -50,5 +51,13 @@ public class SalesModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

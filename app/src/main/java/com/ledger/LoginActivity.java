@@ -3,6 +3,7 @@ package com.ledger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,11 +31,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "sharedPrefs";
 
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         txtUserId = findViewById(R.id.login_phone_edit);
         txtPassword = findViewById(R.id.password_edit);
@@ -46,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginNow();
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE,"HEAD" );
+                firebaseAnalytics.logEvent("Login", bundle);
+
             }
         });
     }
@@ -67,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
 
-            db.collection("Users").whereEqualTo("name",user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection("Users").whereEqualTo("phoneNumber",user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
@@ -77,7 +87,17 @@ public class LoginActivity extends AppCompatActivity {
 
                         String pass = documentSnapshot.getString("password");
                         String type = documentSnapshot.getString("role");
+                        String name = documentSnapshot.getString("name");
+                        String address = documentSnapshot.getString("address");
                         String userId = documentSnapshot.getId();
+                        Boolean accepted;
+
+                        if(documentSnapshot.getBoolean("T&C")!=null){
+                            accepted = documentSnapshot.getBoolean("T&C");
+                        }
+                        else {
+                            accepted = false;
+                        }
 
                         if (password.equals(pass)) {
 
@@ -88,38 +108,57 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userId", userId);
                                 intent.putExtra("type","head");
+                                intent.putExtra("name",name);
+                                intent.putExtra("address",address);
 
-                                editor.putBoolean("Authenticated",true);
-                                editor.putString("type",type);
-                                editor.putString("userId",userId);
+                                Intent intent1 = new Intent(LoginActivity.this, TermsActivity.class);
+                                intent1.putExtra("userId", userId);
+                                intent1.putExtra("type","head");
+                                intent1.putExtra("name",name);
+                                intent1.putExtra("address",address);
 
-                                editor.apply();
+                                if(!accepted){
+                                    startActivity(intent1);
+                                }
+                                else {
+                                    startActivity(intent);
+                                }
 
-                                startActivity(intent);
                                 progressBar.setVisibility(View.INVISIBLE);
                                 finish();
 
                             } else if (type.equals("sales")) {
+
                                 String company = documentSnapshot.getString("company");
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userId", userId);
                                 intent.putExtra("company", company);
                                 intent.putExtra("type","sales");
+                                intent.putExtra("name",name);
+                                intent.putExtra("address",address);
 
-                                editor.putBoolean("Authenticated",true);
-                                editor.putString("type",type);
-                                editor.putString("userId",userId);
-                                editor.putString("company",company);
+                                Intent intent1 = new Intent(LoginActivity.this, TermsActivity.class);
+                                intent1.putExtra("userId", userId);
+                                intent1.putExtra("company", company);
+                                intent1.putExtra("type","sales");
+                                intent1.putExtra("name",name);
+                                intent1.putExtra("address",address);
 
-                                startActivity(intent);
+                                if(!accepted){
+                                    startActivity(intent1);
+                                }
+                                else {
+                                    startActivity(intent);
+                                }
+
                                 progressBar.setVisibility(View.INVISIBLE);
                                 finish();
 
                             } else if (type.equals("dealer")) {
+
                                 String company = documentSnapshot.getString("company");
                                 String sales = documentSnapshot.getString("sales");
-                                String name = documentSnapshot.getString("name");
-                                String address = documentSnapshot.getString("address");
                                 String number = documentSnapshot.getString("phoneNumber");
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -131,13 +170,22 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("address",address);
                                 intent.putExtra("number",number);
 
-                                editor.putBoolean("Authenticated",true);
-                                editor.putString("type",type);
-                                editor.putString("userId",userId);
-                                editor.putString("company",company);
-                                editor.putString("sales",sales);
+                                Intent intent1 = new Intent(LoginActivity.this, TermsActivity.class);
+                                intent1.putExtra("userId", userId);
+                                intent1.putExtra("company", company);
+                                intent1.putExtra("sales",sales);
+                                intent1.putExtra("type","dealer");
+                                intent1.putExtra("name",name);
+                                intent1.putExtra("address",address);
+                                intent1.putExtra("number",number);
 
-                                startActivity(intent);
+                                if(!accepted){
+                                    startActivity(intent1);
+                                }
+                                else {
+                                    startActivity(intent);
+                                }
+
                                 progressBar.setVisibility(View.INVISIBLE);
                                 finish();
 

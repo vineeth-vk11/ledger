@@ -35,7 +35,7 @@
                 app:srcCompat="@drawable/ic_building_office" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/nameOfUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"

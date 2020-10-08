@@ -1,6 +1,5 @@
 package com.ledger.SalesHelper;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,11 +49,15 @@ public class SalesFragment extends Fragment {
 
     TextView fragment;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sales, container, false);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
         Bundle bundle = getArguments();
         company = bundle.getString("company");
@@ -65,7 +69,7 @@ public class SalesFragment extends Fragment {
         sort.setVisibility(View.INVISIBLE);
         download.setVisibility(View.INVISIBLE);
         share.setVisibility(View.INVISIBLE);
-        fragment = getActivity().findViewById(R.id.name);
+        fragment = getActivity().findViewById(R.id.nameOfUser);
 
         fragment.setText("Sales");
 
@@ -118,6 +122,10 @@ public class SalesFragment extends Fragment {
                     salesModel.setPhone(documentSnapshot.getString("phoneNumber"));
                     salesModel.setAddress(documentSnapshot.getString("address"));
 
+                    if(documentSnapshot.getString("pic") != null){
+                        salesModel.setImage(documentSnapshot.getString("pic"));
+                    }
+
                     Log.i("name",documentSnapshot.getString("name"));
 
                     salesModelArrayList.add(salesModel);
@@ -128,6 +136,9 @@ public class SalesFragment extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 if(salesModelArrayList.size() == 0){
                     empty.setVisibility(View.VISIBLE);
+                }
+                else{
+                    empty.setVisibility(View.INVISIBLE);
                 }
             }
         });

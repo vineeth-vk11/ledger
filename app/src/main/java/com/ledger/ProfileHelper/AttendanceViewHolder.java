@@ -15,7 +15,7 @@ public class AttendanceViewHolder extends RecyclerView.ViewHolder {
     public AttendanceViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        name = itemView.findViewById(R.id.name);
+        name = itemView.findViewById(R.id.nameOfUser);
         date = itemView.findViewById(R.id.date);
         time = itemView.findViewById(R.id.time);
 

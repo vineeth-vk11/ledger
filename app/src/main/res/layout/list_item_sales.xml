@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/sales"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
@@ -24,10 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -37,7 +37,7 @@
                 app:srcCompat="@drawable/ic_sales" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/nameOfUser"
                 android:layout_width="wrap_content"
                 android:maxWidth="200dp"
                 android:layout_height="wrap_content"

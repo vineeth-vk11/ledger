@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,11 +53,15 @@ public class CompaniesFragment extends Fragment {
 
     TextView fragment;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_companies, container, false);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
         Bundle bundle = getArguments();
         userId = bundle.getString("userId");
@@ -65,7 +69,7 @@ public class CompaniesFragment extends Fragment {
         sort = getActivity().findViewById(R.id.sort);
         download = getActivity().findViewById(R.id.download);
         share = getActivity().findViewById(R.id.share);
-        fragment = getActivity().findViewById(R.id.name);
+        fragment = getActivity().findViewById(R.id.nameOfUser);
 
         fragment.setText("Companies");
 
@@ -121,8 +125,6 @@ public class CompaniesFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             DocumentSnapshot documentSnapshot1 = task.getResult();
-                            Log.i("id",documentSnapshot1.getId());
-                            Log.i("name",documentSnapshot1.getString("name"));
 
                         }
                     });
@@ -136,6 +138,9 @@ public class CompaniesFragment extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 if(companiesModelsArrayList.size()==0){
                     empty.setVisibility(View.VISIBLE);
+                }
+                else {
+                    empty.setVisibility(View.INVISIBLE);
                 }
             }
         });

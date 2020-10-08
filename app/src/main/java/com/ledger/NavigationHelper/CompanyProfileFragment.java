@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ledger.R;
 
 
@@ -16,12 +17,15 @@ public class CompanyProfileFragment extends Fragment {
 
     TextView fragment;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
-        fragment = getActivity().findViewById(R.id.name);
+        fragment = getActivity().findViewById(R.id.nameOfUser);
 
         fragment.setText("Company Profile");
 

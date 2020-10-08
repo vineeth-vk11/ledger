@@ -11,6 +11,8 @@ public class DealersModel {
     String phone;
     String address;
 
+    String image;
+
     public DealersModel() {
     }
 
@@ -68,5 +70,13 @@ public class DealersModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

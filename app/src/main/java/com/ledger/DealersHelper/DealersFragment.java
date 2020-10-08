@@ -1,6 +1,5 @@
 package com.ledger.DealersHelper;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,11 +53,15 @@ public class DealersFragment extends Fragment {
 
     TextView fragment;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dealers, container, false);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
         Bundle bundle = getArguments();
         salesId = bundle.getString("userId");
@@ -70,7 +74,7 @@ public class DealersFragment extends Fragment {
         download = getActivity().findViewById(R.id.download);
         share = getActivity().findViewById(R.id.share);
 
-        fragment = getActivity().findViewById(R.id.name);
+        fragment = getActivity().findViewById(R.id.nameOfUser);
 
         fragment.setText("Dealers");
 
@@ -128,6 +132,10 @@ public class DealersFragment extends Fragment {
                     dealersModel.setPhone(documentSnapshot.getString("phoneNumber"));
                     dealersModel.setAddress(documentSnapshot.getString("address"));
 
+                    if(documentSnapshot.getString("pic") != null){
+                        dealersModel.setImage(documentSnapshot.getString("pic"));
+                    }
+
                     dealersModelArrayList.add(dealersModel);
                 }
 
@@ -136,6 +144,9 @@ public class DealersFragment extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
                 if(dealersModelArrayList.size()==0){
                     empty.setVisibility(View.VISIBLE);
+                }
+                else {
+                    empty.setVisibility(View.INVISIBLE);
                 }
             }
         });

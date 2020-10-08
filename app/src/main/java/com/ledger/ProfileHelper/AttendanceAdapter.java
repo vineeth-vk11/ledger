@@ -16,6 +16,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceViewHolder
 
     Context context;
     ArrayList<AttendanceModel> attendanceModelArrayList;
+    ArrayList<AttendanceModel> attendanceModelArrayList1;
 
     public AttendanceAdapter(Context context, ArrayList<AttendanceModel> attendanceModelArrayList) {
         this.context = context;

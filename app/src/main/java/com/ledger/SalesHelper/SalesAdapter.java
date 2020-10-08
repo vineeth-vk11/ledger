@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ledger.DealersHelper.DealersFragment;
 import com.ledger.ProfileHelper.ProfileFragment;
 import com.ledger.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +48,13 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesViewHolder> implemen
     @Override
     public void onBindViewHolder(@NonNull SalesViewHolder holder, final int position) {
         holder.name.setText(salesModelArrayList.get(position).getName());
-        holder.image.setImageResource(R.drawable.ic_sales);
+
+        if(salesModelArrayList.get(position).getImage() != null){
+            Picasso.get().load(salesModelArrayList.get(position).getImage()).into(holder.image);
+        }
+        else {
+            holder.image.setImageResource(R.drawable.ic_sales);
+        }
 
         holder.info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +70,13 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesViewHolder> implemen
                 bundle.putString("company", company);
                 bundle.putString("sales", salesModelArrayList.get(position).getId());
                 bundle.putString("from", "sales");
+
+                if(salesModelArrayList.get(position).getImage() != null){
+                    bundle.putString("pic",salesModelArrayList.get(position).getImage());
+                }
+                else{
+                    bundle.putString("pic","none");
+                }
 
                 profileFragment.setArguments(bundle);
 

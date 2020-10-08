@@ -21,7 +21,7 @@ public class SalesViewHolder extends RecyclerView.ViewHolder {
     public SalesViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        name = itemView.findViewById(R.id.name);
+        name = itemView.findViewById(R.id.nameOfUser);
         sales = itemView.findViewById(R.id.sales);
         image = itemView.findViewById(R.id.imageView2);
         info = itemView.findViewById(R.id.info);

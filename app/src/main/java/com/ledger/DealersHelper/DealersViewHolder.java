@@ -23,7 +23,7 @@ public class DealersViewHolder extends RecyclerView.ViewHolder {
     public DealersViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        name = itemView.findViewById(R.id.name);
+        name = itemView.findViewById(R.id.nameOfUser);
         image = itemView.findViewById(R.id.imageView2);
         dealer = itemView.findViewById(R.id.dealer);
         info = itemView.findViewById(R.id.info);

@@ -19,7 +19,7 @@ public class CompaniesViewHolder extends RecyclerView.ViewHolder {
     public CompaniesViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        companyName = itemView.findViewById(R.id.name);
+        companyName = itemView.findViewById(R.id.nameOfUser);
         company = itemView.findViewById(R.id.company);
         image = itemView.findViewById(R.id.imageView2);
     }

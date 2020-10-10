@@ -42,7 +42,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="Dealer1"
                 android:textColor="@color/colorBlack"
-                android:textSize="32sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/info"
                 app:layout_constraintHorizontal_bias="0.167"

@@ -100,6 +100,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesViewHolder> implemen
                 bundle.putString("userId", salesModelArrayList.get(position).getId());
                 bundle.putString("company",company);
                 bundle.putString("from","head");
+                bundle.putString("name",salesModelArrayList.get(position).getName());
                 dealersFragment.setArguments(bundle);
 
                 AppCompatActivity activity = (AppCompatActivity)v.getContext();

@@ -54,6 +54,7 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesViewHolder> 
 
                 Bundle bundle = new Bundle();
                 bundle.putString("company",companiesModelsArrayList.get(position).getCompanyId());
+                bundle.putString("name",companiesModelsArrayList.get(position).getCompanyName());
                 salesFragment.setArguments(bundle);
 
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();

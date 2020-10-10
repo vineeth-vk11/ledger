@@ -62,6 +62,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class TransactionsFragment extends Fragment implements SortTransactionsDialog.OnDatesSelected {
@@ -976,7 +977,9 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
                 transactions.setAdapter(transactionsAdapter);
                 progressBar.setVisibility(View.INVISIBLE);
 
-                toAndFrom.setText(initialDatePdf + " -- " + finalDatePdf);
+               // toAndFrom.setText(initialDatePdf + " -- " + finalDatePdf);
+                String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+                toAndFrom.setText(initialDatePdf + " -- " + date);
 
                 if(transactionsModelArrayList.size()==0){
                     imageView.setVisibility(View.VISIBLE);

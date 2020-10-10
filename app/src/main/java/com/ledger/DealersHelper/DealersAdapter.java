@@ -215,6 +215,8 @@ public class DealersAdapter extends RecyclerView.Adapter<DealersViewHolder> impl
                 bundle.putString("name",dealersModelArrayList.get(position).getName());
                 bundle.putString("address",dealersModelArrayList.get(position).getAddress());
                 bundle.putString("number",dealersModelArrayList.get(position).getPhone());
+                bundle.putString("osLimit",dealersModelArrayList.get(position).getOsLimit());
+
                 transactionsFragment.setArguments(bundle);
 
                 AppCompatActivity activity = (AppCompatActivity)v.getContext();

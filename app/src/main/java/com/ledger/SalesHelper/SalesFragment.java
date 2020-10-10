@@ -51,6 +51,9 @@ public class SalesFragment extends Fragment {
 
     private FirebaseAnalytics firebaseAnalytics;
 
+    TextView toolbarText;
+    String name;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class SalesFragment extends Fragment {
 
         Bundle bundle = getArguments();
         company = bundle.getString("company");
+        name = bundle.getString("name");
 
         sort = getActivity().findViewById(R.id.sort);
         download = getActivity().findViewById(R.id.download);
@@ -82,6 +86,10 @@ public class SalesFragment extends Fragment {
 
         sales.setLayoutManager(new LinearLayoutManager(getContext()));
         sales.setHasFixedSize(true);
+
+        toolbarText = getActivity().findViewById(R.id.nameOfUser);
+        toolbarText.setText(name);
+        toolbarText.setTextSize(24);
 
         db.collection("Companies").document(company).collection("sales").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

@@ -55,6 +55,7 @@ public class DealersFragment extends Fragment {
 
     private FirebaseAnalytics firebaseAnalytics;
 
+    String name;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +68,7 @@ public class DealersFragment extends Fragment {
         salesId = bundle.getString("userId");
         company = bundle.getString("company");
         from = bundle.getString("from");
+        name = bundle.getString("name");
 
         Log.i("from",from);
 
@@ -77,6 +79,8 @@ public class DealersFragment extends Fragment {
         fragment = getActivity().findViewById(R.id.nameOfUser);
 
         fragment.setText("Dealers");
+        fragment.setText(name);
+        fragment.setTextSize(24);
 
         sort.setVisibility(View.INVISIBLE);
         download.setVisibility(View.INVISIBLE);
@@ -131,6 +135,13 @@ public class DealersFragment extends Fragment {
                     dealersModel.setEmail(documentSnapshot.getString("email"));
                     dealersModel.setPhone(documentSnapshot.getString("phoneNumber"));
                     dealersModel.setAddress(documentSnapshot.getString("address"));
+
+                    if(documentSnapshot.getString("osLimit") != null){
+                        dealersModel.setOsLimit(documentSnapshot.getString("osLimit"));
+                    }
+                    else {
+                        dealersModel.setOsLimit("0");
+                    }
 
                     if(documentSnapshot.getString("pic") != null){
                         dealersModel.setImage(documentSnapshot.getString("pic"));

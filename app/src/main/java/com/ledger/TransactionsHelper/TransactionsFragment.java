@@ -115,7 +115,7 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
     String startingDate;
     String endingDate;
 
-    String name, address, number;
+    String name, address, number, osLimit;
 
     String initialDatePdf;
     String finalDatePdf;
@@ -127,6 +127,11 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
     TextView fragment;
 
     private FirebaseAnalytics firebaseAnalytics;
+
+    TextView toolbarText;
+
+    TextView alert;
+    ImageView alertImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,8 +146,6 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
         share = getActivity().findViewById(R.id.share);
         fragment = getActivity().findViewById(R.id.nameOfUser);
 
-        fragment.setText("Transactions");
-
         currentC = view.findViewById(R.id.currentCredit);
         currentD = view.findViewById(R.id.currentDebit);
         outstanding = view.findViewById(R.id.outStandingTotal);
@@ -152,6 +155,9 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
         progressBar = view.findViewById(R.id.progressBar5);
         imageView = view.findViewById(R.id.empty);
         toAndFrom = view.findViewById(R.id.toAndFrom);
+
+        alert = view.findViewById(R.id.textView35);
+        alertImage = view.findViewById(R.id.imageView4);
 
         sort.setVisibility(View.VISIBLE);
         download.setVisibility(View.VISIBLE);
@@ -174,6 +180,11 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
         number = bundle.getString("number");
         address = bundle.getString("address");
         name = bundle.getString("name");
+        osLimit = bundle.getString("osLimit");
+
+        toolbarText = getActivity().findViewById(R.id.nameOfUser);
+        toolbarText.setText(name);
+        toolbarText.setTextSize(14);
 
         Log.i("company",company);
         Log.i("sales",sales);
@@ -933,6 +944,20 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
                     outstanding.setText(String.valueOf(Math.abs(outStandingAmount) + " Dr"));
                 }
 
+                if(outStandingAmount<0){
+                    if(Integer.parseInt(osLimit)>Math.abs(outStandingAmount)){
+
+                        alert.setVisibility(View.GONE);
+                        alert.setVisibility(View.GONE);
+                    }else {
+
+                        alert.setVisibility(View.VISIBLE);
+                        alertImage.setVisibility(View.VISIBLE);
+
+                        alert.setText("Dealers outstanding limit is " + osLimit + " and current outstanding is "+String.valueOf(Math.abs(outStandingAmount)));
+                    }
+                }
+
                 currentC.setText(String.valueOf(Math.abs(currentCredit)));
                 currentD.setText(String.valueOf(Math.abs(currentDebit)));
 
@@ -1067,6 +1092,20 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
                 }
                 else {
                     outstanding.setText(String.valueOf(Math.abs(outStandingAmount) + "Dr"));
+                }
+
+                if(outStandingAmount<0){
+                    if(Integer.parseInt(osLimit)>Math.abs(outStandingAmount)){
+
+                        alert.setVisibility(View.GONE);
+                        alert.setVisibility(View.GONE);
+                    }else {
+
+                        alert.setVisibility(View.VISIBLE);
+                        alertImage.setVisibility(View.VISIBLE);
+
+                        alert.setText("Dealers outstanding limit is " + osLimit + " and current outstanding is "+String.valueOf(Math.abs(outStandingAmount)));
+                    }
                 }
 
                 currentC.setText(String.valueOf(Math.abs(currentCredit)));

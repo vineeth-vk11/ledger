@@ -36,6 +36,8 @@ public class CompaniesFragment extends Fragment {
     RecyclerView companies;
     FirebaseFirestore db;
     ArrayList<CompaniesModels> companiesModelsArrayList;
+    ArrayList<String> companiesList = new ArrayList<>();
+
     String userId;
 
     SearchView searchView;
@@ -109,6 +111,7 @@ public class CompaniesFragment extends Fragment {
         });
         return view;
     }
+
 
     private void getCompanies(){
         progressBar.setVisibility(View.VISIBLE);

@@ -14,8 +14,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.ledger.R;
 import com.ledger.SalesHelper.SalesFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +29,7 @@ import java.util.List;
 public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesViewHolder> implements Filterable {
 
     Context context;
-    ArrayList<CompaniesModels>companiesModelsArrayList;
+    ArrayList<CompaniesModels> companiesModelsArrayList;
     ArrayList<CompaniesModels> companiesModelsArrayListAll;
 
     public CompaniesAdapter(Context context, ArrayList<CompaniesModels> companiesModelsArrayList) {
@@ -42,9 +47,32 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CompaniesViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final CompaniesViewHolder holder, final int position) {
         holder.companyName.setText(companiesModelsArrayList.get(position).getCompanyName());
-        holder.image.setImageResource(R.drawable.ic_building_office);
+
+        final FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        db.collection("Companies").document(companiesModelsArrayList.get(position).getCompanyId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+
+                if(documentSnapshot.exists()){
+                    if(documentSnapshot.getString("pic") != null){
+                        Picasso.get().load(documentSnapshot.getString("pic")).into(holder.image);
+                    }
+                    else {
+                        holder.image.setImageResource(R.drawable.ic_building_office);
+                    }
+
+                    if(!documentSnapshot.getString("name").equals(companiesModelsArrayList.get(position).getCompanyName())){
+                        companiesModelsArrayList.get(position).setCompanyName(documentSnapshot.getString("name"));
+                        holder.companyName.setText(documentSnapshot.getString("name"));
+                    }
+                }
+            }
+        });
+
 
         holder.company.setOnClickListener(new View.OnClickListener() {
             @Override

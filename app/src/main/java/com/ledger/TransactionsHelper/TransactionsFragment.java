@@ -972,6 +972,10 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
                 if(transactionsModelArrayList.size()!=0){
                     finalDatePdf = transactionsModelArrayList.get(0).getDate();
                 }
+                else {
+                    String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+                    finalDatePdf = date;
+                }
 
                 transactionsAdapter = new TransactionsAdapter(getContext(), transactionsModelArrayList);
                 transactions.setAdapter(transactionsAdapter);

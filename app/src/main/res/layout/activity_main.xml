@@ -28,16 +28,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
                     android:background="@color/colorWhite"
                     android:backgroundTint="@color/colorPrimary"
                     android:gravity="center"
-                    android:text="Dealers"
+                    android:maxWidth="150dp"
+                    android:maxLines="1"
+                    android:text=""
                     android:textColor="@color/colorWhite"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.353"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageButton"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
@@ -55,22 +56,22 @@
                     android:id="@+id/sort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/download"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="invisible"
-                    android:backgroundTint="@color/colorPrimary"
                     app:srcCompat="@drawable/ic_baseline_sort_24" />
 
                 <ImageButton
                     android:id="@+id/download"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/share"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="invisible"
-                    android:backgroundTint="@color/colorPrimary"
                     app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
 
                 <ImageButton
@@ -78,11 +79,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="invisible"
-                    android:backgroundTint="@color/colorPrimary"
                     app:srcCompat="@drawable/ic_baseline_share_24" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

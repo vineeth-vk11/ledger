@@ -62,6 +62,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 
@@ -172,7 +173,6 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
                 sortTransactionsDialog.show(getActivity().getSupportFragmentManager(), "Sort transactions");
             }
         });
-
 
         Bundle bundle = getArguments();
         company = bundle.getString("company");
@@ -827,10 +827,6 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
         return file;
     }
 
-    private void addTable(Document document, ArrayList<TransactionsModel> transactionsModelArrayList) throws DocumentException {
-
-
-    }
     private void addNewItem(Document document, String text, int alignCenter, Font font) throws DocumentException {
 
         Chunk chunk = new Chunk(text, font);
@@ -838,6 +834,7 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
         paragraph.setAlignment(alignCenter);
         document.add(paragraph);
     }
+
     private void getTransactions(){
         progressBar.setVisibility(View.VISIBLE);
         db.collection("Companies").document(company).collection("sales").document(sales).collection("dealers")
@@ -992,6 +989,16 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
                     imageView.setVisibility(View.INVISIBLE);
                 }
 
+                HashMap<String , Object> data = new HashMap<>();
+                data.put("outstanding", String.valueOf(outStandingAmount));
+
+                db.collection("Companies").document(company).collection("sales").document(sales).collection("dealers")
+                        .document(id).update(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
             }
         });
     }

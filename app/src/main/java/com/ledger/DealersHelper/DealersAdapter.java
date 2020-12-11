@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ledger.ProfileHelper.ProfileFragment;
 import com.ledger.R;
+import com.ledger.TransactionsHelper.SortTransactionsDialog;
 import com.ledger.TransactionsHelper.TransactionsFragment;
 import com.squareup.picasso.Picasso;
 
@@ -40,13 +41,15 @@ public class DealersAdapter extends RecyclerView.Adapter<DealersViewHolder> impl
     Context context;
     ArrayList<DealersModel> dealersModelArrayList;
     ArrayList<DealersModel> dealersModelArrayListAll;
+    FragmentManager fragmentManager;
     String from;
 
     String date;
 
-    public DealersAdapter(Context context, ArrayList<DealersModel> dealersModelArrayList, String from) {
+    public DealersAdapter(Context context, ArrayList<DealersModel> dealersModelArrayList, FragmentManager fragmentManager, String from) {
         this.context = context;
         this.dealersModelArrayList = dealersModelArrayList;
+        this.fragmentManager = fragmentManager;
         this.dealersModelArrayListAll = new ArrayList<>(dealersModelArrayList);
         this.from = from;
     }
@@ -65,6 +68,9 @@ public class DealersAdapter extends RecyclerView.Adapter<DealersViewHolder> impl
 
         holder.image.setImageResource(R.drawable.ic_dealer);
 
+        if(Integer.parseInt(dealersModelArrayList.get(position).getOutstanding()) > Integer.parseInt(dealersModelArrayList.get(position).getOsLimit())){
+            holder.flag.setVisibility(View.VISIBLE);
+        }
 
         holder.info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +181,11 @@ public class DealersAdapter extends RecyclerView.Adapter<DealersViewHolder> impl
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         holder.attendance.setEnabled(false);
                                                                         Toast.makeText(context, "Attendance marked",Toast.LENGTH_SHORT).show();
+
+                                                                        AttendanceNotesDialog attendanceNotesDialog = new AttendanceNotesDialog(dealersModelArrayList.get(position).getCompany(),
+                                                                                dealersModelArrayList.get(position).getSalesId(), dealersModelArrayList.get(position).getName());
+
+                                                                        attendanceNotesDialog.show(fragmentManager, "Add Notes");
                                                                     }
                                                                 });
                                                             }

@@ -36,6 +36,9 @@ import com.ledger.CompaniesHelper.CompaniesFragment;
 import com.ledger.DealersHelper.DealersFragment;
 import com.ledger.NavigationHelper.CompanyProfileFragment;
 import com.ledger.NavigationHelper.EditProfileFragment;
+import com.ledger.NavigationHelper.SalesHeadProfileFragment;
+import com.ledger.NavigationHelper.SalesNotificationsFragment;
+import com.ledger.SalesHelper.SalesDashboardActivity;
 import com.ledger.TransactionsHelper.TransactionsFragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         type = intent.getStringExtra("type");
 
         if(type.equals("head")){
@@ -152,6 +155,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if(type.equals("head") || type.equals("dealer")){
+            navigationView.getMenu().findItem(R.id.notifications).setVisible(false);
+            navigationView.getMenu().findItem(R.id.salesDashboard).setVisible(false);
+        }
+
+        if(type.equals("dealer")){
+            navigationView.getMenu().findItem(R.id.salesProfile).setVisible(true);
+        }
+        else {
+            navigationView.getMenu().findItem(R.id.salesProfile).setVisible(false);
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -249,6 +263,45 @@ public class MainActivity extends AppCompatActivity {
 
                         return true;
 
+                    case R.id.notifications:
+
+                        SalesNotificationsFragment salesNotificationsFragment = new SalesNotificationsFragment();
+
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("userId", userId);
+                        bundle1.putString("company",company);
+
+                        salesNotificationsFragment.setArguments(bundle1);
+
+                        FragmentManager fragmentManager2 = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+                        fragmentTransaction2.replace(R.id.main_frame,salesNotificationsFragment);
+                        fragmentTransaction2.addToBackStack(null);
+                        fragmentTransaction2.commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+
+                        return true;
+
+                    case R.id.salesProfile:
+                        SalesHeadProfileFragment salesHeadProfileFragment = new SalesHeadProfileFragment();
+
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("userId", userId);
+                        bundle2.putString("company",company);
+                        bundle2.putString("sales",sales);
+                        bundle2.putString("name",name);
+
+                        salesHeadProfileFragment.setArguments(bundle2);
+
+                        FragmentManager fragmentManager3 = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction3 = fragmentManager3.beginTransaction();
+                        fragmentTransaction3.replace(R.id.main_frame,salesHeadProfileFragment);
+                        fragmentTransaction3.addToBackStack(null);
+                        fragmentTransaction3.commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+
+                        return true;
+
                     case R.id.logout:
                         new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("Logout")
@@ -270,6 +323,14 @@ public class MainActivity extends AppCompatActivity {
                         }).show();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
+
+                    case R.id.salesDashboard:
+
+                        Intent intent1 = new Intent(getApplicationContext(), SalesDashboardActivity.class);
+                        intent1.putExtra("company",company);
+                        intent1.putExtra("sales",userId);
+                        startActivity(intent1);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                 }
                 return false;
             }

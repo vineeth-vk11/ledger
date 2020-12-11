@@ -1,4 +1,4 @@
-package com.ledger.ProfileHelper;
+package com.ledger.SalesHelper.AttendanceHelper;
 
 public class AttendanceModel {
 

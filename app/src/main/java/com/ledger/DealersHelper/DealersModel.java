@@ -14,6 +14,8 @@ public class DealersModel {
     String image;
 
     String osLimit;
+    String outstanding;
+    String healthValue;
 
     public DealersModel() {
     }
@@ -88,5 +90,21 @@ public class DealersModel {
 
     public void setOsLimit(String osLimit) {
         this.osLimit = osLimit;
+    }
+
+    public String getOutstanding() {
+        return outstanding;
+    }
+
+    public void setOutstanding(String outstanding) {
+        this.outstanding = outstanding;
+    }
+
+    public String getHealthValue() {
+        return healthValue;
+    }
+
+    public void setHealthValue(String healthValue) {
+        this.healthValue = healthValue;
     }
 }

@@ -17,6 +17,7 @@ public class SalesViewHolder extends RecyclerView.ViewHolder {
     CardView sales;
     ImageView image;
     ImageButton info;
+    ImageButton attendance;
 
     public SalesViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +26,7 @@ public class SalesViewHolder extends RecyclerView.ViewHolder {
         sales = itemView.findViewById(R.id.sales);
         image = itemView.findViewById(R.id.imageView2);
         info = itemView.findViewById(R.id.info);
+        attendance = itemView.findViewById(R.id.imageButton3);
 
     }
 }

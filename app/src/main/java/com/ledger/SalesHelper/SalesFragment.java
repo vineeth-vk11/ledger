@@ -134,7 +134,19 @@ public class SalesFragment extends Fragment {
                         salesModel.setImage(documentSnapshot.getString("pic"));
                     }
 
-                    Log.i("name",documentSnapshot.getString("name"));
+                    if(documentSnapshot.getString("salesTarget") != null){
+                        salesModel.setSalesTarget(documentSnapshot.getString("salesTarget"));
+                    }
+                    else {
+                        salesModel.setSalesTarget(null);
+                    }
+
+                    if(documentSnapshot.getString("collectionTarget") != null){
+                        salesModel.setCollectionTarget(documentSnapshot.getString("collectionTarget"));
+                    }
+                    else {
+                        salesModel.setCollectionTarget(null);
+                    }
 
                     salesModelArrayList.add(salesModel);
                 }

@@ -10,6 +10,8 @@ public class SalesModel {
     String address;
     String image;
 
+    String salesTarget, collectionTarget;
+
     public SalesModel() {
     }
 
@@ -59,5 +61,21 @@ public class SalesModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getSalesTarget() {
+        return salesTarget;
+    }
+
+    public void setSalesTarget(String salesTarget) {
+        this.salesTarget = salesTarget;
+    }
+
+    public String getCollectionTarget() {
+        return collectionTarget;
+    }
+
+    public void setCollectionTarget(String collectionTarget) {
+        this.collectionTarget = collectionTarget;
     }
 }

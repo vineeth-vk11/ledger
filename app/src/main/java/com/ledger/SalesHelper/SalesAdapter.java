@@ -1,6 +1,7 @@
 package com.ledger.SalesHelper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +70,8 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesViewHolder> implemen
                 bundle.putString("address", salesModelArrayList.get(position).getAddress());
                 bundle.putString("company", company);
                 bundle.putString("sales", salesModelArrayList.get(position).getId());
+                bundle.putString("salesTarget", salesModelArrayList.get(position).getSalesTarget());
+                bundle.putString("collectionTarget",salesModelArrayList.get(position).getCollectionTarget());
                 bundle.putString("from", "sales");
 
                 if(salesModelArrayList.get(position).getImage() != null){
@@ -109,6 +112,24 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesViewHolder> implemen
                 fragmentTransaction.replace(R.id.main_frame,dealersFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+            }
+        });
+
+        holder.attendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, SalesDashboardActivity.class);
+                intent.putExtra("name",salesModelArrayList.get(position).getName());
+                intent.putExtra("email",salesModelArrayList.get(position).getEmail());
+                intent.putExtra("phone",salesModelArrayList.get(position).getPhone());
+                intent.putExtra("address",salesModelArrayList.get(position).getAddress());
+                intent.putExtra("company",company);
+                intent.putExtra("sales",salesModelArrayList.get(position).getId());
+                intent.putExtra("from","sales");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
             }
         });

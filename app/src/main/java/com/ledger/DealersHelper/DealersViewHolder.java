@@ -19,6 +19,7 @@ public class DealersViewHolder extends RecyclerView.ViewHolder {
     CardView dealer;
     ImageButton info;
     CheckBox attendance;
+    ImageView flag;
 
     public DealersViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,6 +29,7 @@ public class DealersViewHolder extends RecyclerView.ViewHolder {
         dealer = itemView.findViewById(R.id.dealer);
         info = itemView.findViewById(R.id.info);
         attendance = itemView.findViewById(R.id.attendance);
+        flag = itemView.findViewById(R.id.flag);
 
     }
 }

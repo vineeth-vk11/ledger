@@ -88,8 +88,8 @@ public class DealersFragment extends Fragment {
         notifications = getActivity().findViewById(R.id.notifications);
         notificationsNumber = getActivity().findViewById(R.id.notificationsNumber);
 
-        notifications.setVisibility(View.VISIBLE);
-        notificationsNumber.setVisibility(View.VISIBLE);
+//        notifications.setVisibility(View.VISIBLE);
+//        notificationsNumber.setVisibility(View.VISIBLE);
 
         fragment = getActivity().findViewById(R.id.nameOfUser);
 

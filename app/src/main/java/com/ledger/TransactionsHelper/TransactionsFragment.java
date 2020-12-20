@@ -324,11 +324,7 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
 
     private void createPDFFile(String name, String address, String initialDate, String finalDate) throws IOException {
 
-        Log.i("initial",initialDate);
-        Log.i("final",finalDate);
-
         String fileName = name + initialDate + "-" + finalDate+".pdf";
-        Log.i("fileName",fileName);
 
         String path = Environment.getExternalStorageDirectory() + File.separator + "Ledger.pdf";
         File file = new File(path);
@@ -577,11 +573,7 @@ public class TransactionsFragment extends Fragment implements SortTransactionsDi
 
     private File createPDFFileAndShare(String name, String address, String initialDate, String finalDate) throws IOException {
 
-        Log.i("initial",initialDate);
-        Log.i("final",finalDate);
-
         String fileName = name + initialDate + "-" + finalDate+".pdf";
-        Log.i("fileName",fileName);
         String path = Environment.getExternalStorageDirectory() + File.separator + "Ledger.pdf";
         File file = new File(path);
 
